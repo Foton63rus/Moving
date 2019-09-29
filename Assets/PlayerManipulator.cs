@@ -11,7 +11,7 @@ public class PlayerManipulator : MonoBehaviour
 
     private Vector3 moveTo, moveTo2 = Vector3.zero;
 
-    [CanBeNull] private Cube moveToBlock;
+    [CanBeNull] private GameObject moveToBlock;
 
     private bool canMove, canPush;
     // Start is called before the first frame update
@@ -67,12 +67,12 @@ public class PlayerManipulator : MonoBehaviour
         
         for(int i = 0; i<GlobalVars.cubes.Count; i++)
         {
-            if (moveTo == GlobalVars.cubes[i].GetGameObject().transform.position)
+            if (moveTo == GlobalVars.cubes[i].transform.position)
             {
                 moveToBlock = GlobalVars.cubes[i];
-                if (!moveToBlock.Movable) canMove = false;
+                if (!moveToBlock.GetComponent<Cube>().movable) canMove = false;
             }
-            if (moveTo2 == GlobalVars.cubes[i].GetGameObject().transform.position)
+            if (moveTo2 == GlobalVars.cubes[i].transform.position)
             {
                 canPush = false;
                 Debug.Log("cannt push");
@@ -81,26 +81,19 @@ public class PlayerManipulator : MonoBehaviour
 
         if (canMove)
         {
-            try
+            if (moveToBlock != null)
             {
-                if (moveToBlock.GetGameObject() != null)
+                if (canPush)
                 {
-                    if (canPush)
-                    {
-                        player.transform.position += player.transform.forward;
-                        moveToBlock.GetGameObject().transform.position += player.transform.forward;
-                    }
-                    else
-                    {
-                        
-                    }
+                    player.transform.position += player.transform.forward;
+                    moveToBlock.transform.position += player.transform.forward;
                 }
                 else
                 {
-                    player.transform.position += player.transform.forward;
+                    
                 }
             }
-            catch (Exception e)
+            else
             {
                 player.transform.position += player.transform.forward;
             }

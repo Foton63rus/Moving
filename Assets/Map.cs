@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
-    
 
     public Map()
     {
@@ -17,7 +16,6 @@ public class Map : MonoBehaviour
     {
         /*using (FileStream fs = new FileStream(@"Maps/"+mapNumber.ToString(), FileMode.Open))
         {
-            
         }*/
         /*
          cubeAdd(0,0, 0, false);
@@ -33,17 +31,38 @@ public class Map : MonoBehaviour
 
     private void cubeAdd(int X, int Y, int Z, int type = 0, bool movable = false)
     {
-        Cube newCube = new Cube(X, Y, Z, type, movable);
+        GameObject newCube = Instantiate(Resources.Load(GlobalVars.cubeName(type), typeof(GameObject))) as GameObject;
+        newCube.transform.position = new Vector3(X, Z, Y);
+        newCube.AddComponent<Cube>();
+        newCube.GetComponent<Cube>().movable = movable;
+        newCube.GetComponent<Cube>().type = type;
+        
         GlobalVars.cubes.Add(newCube);
     }
 
     public void MapLoadTest()
     {
-        for (int i = 0; i<GlobalVars.cubeNamesCount; i++)
+        for (int i = 0; i<5; i++)
         {
-            cubeAdd(i, 0, 0, i);
+            for (int j = 0; j<5; j++)
+            {
+                if (i == j && i == 2)
+                {
+                    cubeAdd(i, j, 1, 0, true);
+                    cubeAdd(i, j, 0, 1);
+                }else if(i == j && i == 4)
+                {
+                    cubeAdd(i, j, 0, 2);
+                    cubeAdd(i, j, 1, 0, true);
+                }
+                else
+                {
+                    cubeAdd(i, j, 0, 2);
+                }
+                
+            }
         }
-        cubeAdd(3, 0, 1,2, true);
-        cubeAdd(2, 0, 1, 2, true);
+        //cubeAdd(3, 0, 1,2, true);
+        //cubeAdd(2, 0, 1, 2, true);
     }
 }
