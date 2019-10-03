@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class Map : MonoBehaviour
 {
-
-    public Map()
-    {
-        
-    }
     
+    private GameObject Player;
+    private int OnTargets;
     public void Load(int mapNumber)
     {
         /*using (FileStream fs = new FileStream(@"Maps/"+mapNumber.ToString(), FileMode.Open))
@@ -22,11 +21,15 @@ public class Map : MonoBehaviour
         cubeAdd(1,1, 1,false);
         cubeAdd(2,2, 2,false);
         */
+        reset();
         MapLoadTest();
+        //Player = playerAdd(0, 0);
+        //GameObject.Find("Camera").GetComponent<Transform>().LookAt(Player.transform);
+        
     }
     static void reset()
     {
-        
+        if(GlobalVars.player != null) GlobalVars.player.transform.position = Vector3.zero;
     }
 
     private void cubeAdd(int X, int Y, int Z, int type = 0, bool movable = false)
@@ -39,7 +42,12 @@ public class Map : MonoBehaviour
         
         GlobalVars.cubes.Add(newCube);
     }
-
+    private GameObject playerAdd(int X, int Y)
+    {
+        GameObject _Player = Instantiate(Resources.Load("Models/Player", typeof(GameObject))) as GameObject;
+        _Player.transform.position = new Vector3(X, 1, Y);
+        return _Player;
+    }
     public void MapLoadTest()
     {
         for (int i = 0; i<5; i++)
@@ -50,9 +58,9 @@ public class Map : MonoBehaviour
                 {
                     cubeAdd(i, j, 1, 0, true);
                     cubeAdd(i, j, 0, 1);
-                }else if(i == j && i == 4)
+                }else if(i == j && i == 1)
                 {
-                    cubeAdd(i, j, 0, 2);
+                    cubeAdd(i, j, 0, 1);
                     cubeAdd(i, j, 1, 0, true);
                 }
                 else

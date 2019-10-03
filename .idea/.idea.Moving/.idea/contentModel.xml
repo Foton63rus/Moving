@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\4ton1\.Rider2019.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\4ton1\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_Moving.483883017.00" t="ExcludeRecursive" />
-    <e p="D:\Unity\Moving" t="IncludeRecursive">
+    <e p="C:\Users\user\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\user\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_Moving.-1331017883.00" t="ExcludeRecursive" />
+    <e p="E:\Project\Unity\Moving" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
@@ -11,6 +11,7 @@
         <e p="Cube.cs" t="Include" />
         <e p="Game.cs" t="Include" />
         <e p="GlobalVars.cs" t="Include" />
+        <e p="GUI.cs" t="Include" />
         <e p="Map.cs" t="Include" />
         <e p="PlayerManipulator.cs" t="Include" />
         <e p="Standard Assets" t="Include">
@@ -90,12 +91,14 @@
             <e p="WaypointProgressTracker.cs" t="Include" />
           </e>
         </e>
-        <e p="TestClass.cs" t="Include" />
       </e>
+      <e p="Library" t="ExcludeRecursive" />
       <e p="Moving.sln" t="IncludeFlat" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
-      <e p="Temp\bin" t="ExcludeRecursive" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
     </e>
   </component>
 </project>
