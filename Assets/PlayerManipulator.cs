@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -8,9 +7,10 @@ public class PlayerManipulator : MonoBehaviour
 {
     private GameObject player;
     private float Yaw;
-
+    private InputAgregator IA;
     private Vector3 moveTo, moveTo2 = Vector3.zero;
     private bool hasFloor, hasFloor2 = false;
+    private GameObject camera;
 
     [CanBeNull] private GameObject moveToBlock;
 
@@ -18,20 +18,15 @@ public class PlayerManipulator : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        GlobalVars.player = player;
+        camera = GameObject.Find("Camera");
         Yaw = 0f;
         player = gameObject;
+        IA = camera.GetComponent<InputAgregator>();
+        IA.OnMove += move;
+        IA.OnRotateToLeft += rotateLeft;
+        IA.OnRotateToRight += rotateRight;
+        IA.OnRotateToBack += rotateBack;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.W)) move();
-        if (Input.GetKeyDown(KeyCode.A)) rotateLeft();
-        if (Input.GetKeyDown(KeyCode.S)) rotateBack();
-        if (Input.GetKeyDown(KeyCode.D)) rotateRight();
-    }
-
     [SerializeField] private void rotateLeft()
     {
         Yaw -= 90f;
@@ -67,7 +62,6 @@ public class PlayerManipulator : MonoBehaviour
             if (moveTo2 == GlobalVars.cubes[i].transform.position)
             {
                 canPush = false;
-                Debug.Log("cannt push");
             }
            
         }
@@ -77,20 +71,22 @@ public class PlayerManipulator : MonoBehaviour
             {
                 if (canPush && hasFloor2)
                 {
+                    //walk with a cube
                     player.transform.position += player.transform.forward;
                     moveToBlock.transform.position += player.transform.forward;
-                    GameObject.Find("Camera").GetComponent<Game>().checkWin();
+                    camera.GetComponent<Game>().checkWin();
                 }
                 else
                 {
-                    Debug.Log(2);
+                    //cannt walk
                 }
             }
             else
             {
+                //walk without a cube
                 player.transform.position += player.transform.forward;
-                Debug.Log(3);
             }
         }
+        camera.transform.LookAt(player.transform);
     }
 }

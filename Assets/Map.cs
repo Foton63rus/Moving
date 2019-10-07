@@ -8,13 +8,11 @@ using UnityEngine.Animations;
 
 public class Map : MonoBehaviour
 {
-    
-    private GameObject Player;
-    private int OnTargets;
     public void Load(int mapNumber)
     {
-        /*using (FileStream fs = new FileStream(@"Maps/"+mapNumber.ToString(), FileMode.Open))
+        /*using (FileStream fs = new FileStream(@"Maps/maps", FileMode.Open))
         {
+            Debug.Log(fs.CanRead);
         }*/
         /*
          cubeAdd(0,0, 0, false);
@@ -23,13 +21,10 @@ public class Map : MonoBehaviour
         */
         reset();
         MapLoadTest();
-        //Player = playerAdd(0, 0);
-        //GameObject.Find("Camera").GetComponent<Transform>().LookAt(Player.transform);
-        
     }
     static void reset()
     {
-        if(GlobalVars.player != null) GlobalVars.player.transform.position = Vector3.zero;
+        if(GlobalVars.player != null) GlobalVars.player.transform.position = Vector3.up;
     }
 
     private void cubeAdd(int X, int Y, int Z, int type = 0, bool movable = false)
@@ -42,17 +37,11 @@ public class Map : MonoBehaviour
         
         GlobalVars.cubes.Add(newCube);
     }
-    private GameObject playerAdd(int X, int Y)
-    {
-        GameObject _Player = Instantiate(Resources.Load("Models/Player", typeof(GameObject))) as GameObject;
-        _Player.transform.position = new Vector3(X, 1, Y);
-        return _Player;
-    }
     public void MapLoadTest()
     {
-        for (int i = 0; i<5; i++)
+        for (int i = 0; i<8; i++)
         {
-            for (int j = 0; j<5; j++)
+            for (int j = 0; j<8; j++)
             {
                 if (i == j && i == 2)
                 {
@@ -72,5 +61,12 @@ public class Map : MonoBehaviour
         }
         //cubeAdd(3, 0, 1,2, true);
         //cubeAdd(2, 0, 1, 2, true);
+    }
+
+    public void RedactorLoad()
+    {
+        GlobalVars.player.transform.position = Vector3.up;
+        GameObject.Find("Camera").transform.LookAt(Vector3.zero);
+        cubeAdd(0, 0, 0, 2);
     }
 }
