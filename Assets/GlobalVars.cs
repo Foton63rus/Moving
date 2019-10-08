@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -8,6 +7,8 @@ public static class GlobalVars
     [CanBeNull] public static GameObject player;
     private static List<string> cubeNames = new List<string>();
     public static List<GameObject> cubes = new List<GameObject>();
+    public static InputAgregator IA;
+    [CanBeNull] public static Game game = null;
     public static int cubeNamesCount
     {
         get
@@ -20,7 +21,6 @@ public static class GlobalVars
     {
         return cubeNames[index];
     }
-    //private static Dictionary<int, string> cubeName = new Dictionary<int, string>(){};
     static GlobalVars()
     {
         //Loading Resources/cubeNames
@@ -29,7 +29,6 @@ public static class GlobalVars
         cubeNames.Add("Models/BoxGround 1");
         cubeNames.Add("Models/BoxAsphalt");
         cubeNames.Add("Models/BoxTile");
-        
         
         Debug.Log("GlobalVars loaded");
     }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using UnityEngine;
 
 public class PlayerManipulator : MonoBehaviour
@@ -27,22 +25,22 @@ public class PlayerManipulator : MonoBehaviour
         IA.OnRotateToRight += rotateRight;
         IA.OnRotateToBack += rotateBack;
     }
-    [SerializeField] private void rotateLeft()
+    private void rotateLeft()
     {
         Yaw -= 90f;
         player.transform.rotation = Quaternion.Euler(0, Yaw, 0);
     }
-    [SerializeField] private void rotateRight()
+    private void rotateRight()
     {
         Yaw += 90f;
         player.transform.rotation = Quaternion.Euler(0, Yaw, 0);
     }
-    [SerializeField] private void rotateBack()
+    private void rotateBack()
     {
         Yaw += 180f;
         player.transform.rotation = Quaternion.Euler(0, Yaw, 0);
     }
-    [SerializeField] private void move()
+    private void move()
     {
         moveToBlock = null;
         hasFloor = hasFloor2 = false;

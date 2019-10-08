@@ -61,6 +61,7 @@
     <Compile Include="Assets\Game.cs" />
     <Compile Include="Assets\GlobalVars.cs" />
     <Compile Include="Assets\GUI.cs" />
+    <Compile Include="Assets\InputAgregator.cs" />
     <Compile Include="Assets\Map.cs" />
     <Compile Include="Assets\PlayerManipulator.cs" />
     <Reference Include="Unity.Timeline.Editor">

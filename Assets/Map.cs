@@ -1,15 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Animations;
 
 public class Map : MonoBehaviour
 {
+    private GameObject spawnCube;
+    private InputAgregator IA;
+    private GameObject camera;
+
+    private void Awake()
+    {
+        camera = GameObject.Find("Camera");
+        IA = camera.GetComponent<InputAgregator>();
+        Debug.Log("IA "+IA);
+        IA.OnMoveForwardRB += pushBlockToForward;
+        IA.OnMoveBackRB += pushBlockToBack;
+        IA.OnMoveLeftRB += pushBlockToLeft;
+        IA.OnMoveRightRB += pushBlockToRight;
+        IA.OnMoveUpRB += pushBlockToUp;
+        IA.OnMoveDownRB += pushBlockToDown;
+    }
+
     public void Load(int mapNumber)
     {
+        //TODO добавить чтение запись
         /*using (FileStream fs = new FileStream(@"Maps/maps", FileMode.Open))
         {
             Debug.Log(fs.CanRead);
@@ -27,7 +42,7 @@ public class Map : MonoBehaviour
         if(GlobalVars.player != null) GlobalVars.player.transform.position = Vector3.up;
     }
 
-    private void cubeAdd(int X, int Y, int Z, int type = 0, bool movable = false)
+    private GameObject cubeAdd(int X, int Y, int Z, int type = 0, bool movable = false)
     {
         GameObject newCube = Instantiate(Resources.Load(GlobalVars.cubeName(type), typeof(GameObject))) as GameObject;
         newCube.transform.position = new Vector3(X, Z, Y);
@@ -36,6 +51,8 @@ public class Map : MonoBehaviour
         newCube.GetComponent<Cube>().type = type;
         
         GlobalVars.cubes.Add(newCube);
+
+        return newCube;
     }
     public void MapLoadTest()
     {
@@ -65,8 +82,49 @@ public class Map : MonoBehaviour
 
     public void RedactorLoad()
     {
+        clearMap();
         GlobalVars.player.transform.position = Vector3.up;
-        GameObject.Find("Camera").transform.LookAt(Vector3.zero);
-        cubeAdd(0, 0, 0, 2);
+        camera.transform.LookAt(Vector3.zero);
+        spawnCube = cubeAdd(0, 0, 0, 2);
+    }
+
+    private void clearMap()
+    {
+        foreach (GameObject cube in GlobalVars.cubes)
+        {
+            Destroy(cube);
+        }
+        GlobalVars.cubes = new List<GameObject>();
+    }
+
+    private void pushBlockToForward()
+    {
+        spawnCube.transform.position += Vector3.forward;
+        camera.transform.LookAt(spawnCube.transform.position);
+    }
+    private void pushBlockToBack()
+    {
+        spawnCube.transform.position -= Vector3.forward;
+        camera.transform.LookAt(spawnCube.transform.position);
+    }
+    private void pushBlockToLeft()
+    {
+        spawnCube.transform.position -= Vector3.right;
+        camera.transform.LookAt(spawnCube.transform.position);
+    }
+    private void pushBlockToRight()
+    {
+        spawnCube.transform.position += Vector3.right;
+        camera.transform.LookAt(spawnCube.transform.position);
+    }
+    private void pushBlockToUp()
+    {
+        spawnCube.transform.position += Vector3.up;
+        camera.transform.LookAt(spawnCube.transform.position);
+    }
+    private void pushBlockToDown()
+    {
+        spawnCube.transform.position -= Vector3.up;
+        camera.transform.LookAt(spawnCube.transform.position);
     }
 }

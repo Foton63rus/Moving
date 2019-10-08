@@ -12,6 +12,7 @@
         <e p="Game.cs" t="Include" />
         <e p="GlobalVars.cs" t="Include" />
         <e p="GUI.cs" t="Include" />
+        <e p="InputAgregator.cs" t="Include" />
         <e p="Map.cs" t="Include" />
         <e p="PlayerManipulator.cs" t="Include" />
         <e p="Standard Assets" t="Include">
