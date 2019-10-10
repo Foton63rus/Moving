@@ -6,10 +6,11 @@ public class Game : MonoBehaviour
 {
     private Map map;
     private List<GameObject> targets = new List<GameObject>();
-    private GameObject camera;
+    public GameObject camera;
     private GameObject player;
     private GameObject canvasInGame, canvasInMenu, canvasInRedactor;
     private int currentLVL;
+    private int maxLVL;
     private bool inGame;
     private bool inRedactor;
     
@@ -18,7 +19,7 @@ public class Game : MonoBehaviour
         Init();
         BaseMenuLoad();
         GlobalVars.game = this;
-        //GameLoad();
+        currentLVL = maxLVL = 1;
     }
 
     public bool InGame
@@ -34,10 +35,10 @@ public class Game : MonoBehaviour
     public void MapLoad(int i)
     {
         map.Load(i);
-        targets = GlobalVars.cubes.ToList().Where(x => x.GetComponent<Cube>().type == 1).ToList();
     }
     public void checkWin()
     {
+        targets = GlobalVars.cubes.ToList().Where(x => x.GetComponent<Cube>().type == 1).ToList();
         uint tar = 0;
         foreach (GameObject target in targets)
         {
@@ -50,7 +51,21 @@ public class Game : MonoBehaviour
                 }
             }
         }
-        if(tar == targets.Count) Debug.Log("win");
+
+        if (tar == targets.Count)
+        {
+            //TODO need to do WIN action
+            if (currentLVL < GlobalVars.LVLCount)
+            {
+                ++currentLVL;
+                if (currentLVL > maxLVL) maxLVL = currentLVL;
+                MapLoad(currentLVL);
+            }
+            else
+            {
+                Debug.Log("Game Finished!!! Wait new levels");
+            }
+        }
     }
 
     private void Init()
@@ -70,7 +85,6 @@ public class Game : MonoBehaviour
         canvasInMenu.SetActive(true);
         canvasInGame.SetActive(false);
         canvasInRedactor.SetActive(false);
-        //var buttons = canvasInMenu.transform.GetComponentsInChildren<Button>();
     }
 
     public void GameLoad()
@@ -81,8 +95,9 @@ public class Game : MonoBehaviour
         canvasInRedactor.SetActive(false);
         if (!inGame)
         {
-            MapLoad(1);
+            MapLoad(currentLVL);
             inGame = true;
+            inRedactor = false;
         }
         camera.transform.LookAt(player.transform);
     }
@@ -103,6 +118,7 @@ public class Game : MonoBehaviour
         GameObject _Player = Instantiate(Resources.Load("Models/Player", typeof(GameObject))) as GameObject;
         _Player.transform.position = new Vector3(X, 1, Y);
         GlobalVars.player = _Player;
+        _Player.AddComponent<PlayerManipulator>();
         return _Player;
     }
     public void Exit()

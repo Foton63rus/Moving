@@ -9,6 +9,10 @@ public static class GlobalVars
     public static List<GameObject> cubes = new List<GameObject>();
     public static InputAgregator IA;
     [CanBeNull] public static Game game = null;
+    public static int currentLVL = 1;
+    public static int maxLVL = 1;
+    public static int LVLCount = 1;
+
     public static int cubeNamesCount
     {
         get

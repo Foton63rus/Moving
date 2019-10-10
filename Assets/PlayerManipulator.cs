@@ -13,7 +13,7 @@ public class PlayerManipulator : MonoBehaviour
     [CanBeNull] private GameObject moveToBlock;
 
     private bool canMove, canMove2, canPush;
-    // Start is called before the first frame update
+
     void Awake()
     {
         camera = GameObject.Find("Camera");

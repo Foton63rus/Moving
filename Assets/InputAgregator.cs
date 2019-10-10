@@ -2,11 +2,8 @@
 public delegate void inputEvents();
 public class InputAgregator : MonoBehaviour
 {
-    private float MouseScrollScale = 0.1f;
-    private float RedactorScaleFactor = 0.1f;
     private Transform CamTransform;
     private float hMouse, vMouse;
-    private Vector3 CamPos = new Vector3();
     public event inputEvents OnMove;
     public event inputEvents OnRotateToLeft;
     public event inputEvents OnRotateToRight;
@@ -17,6 +14,9 @@ public class InputAgregator : MonoBehaviour
     public event inputEvents OnMoveRightRB;
     public event inputEvents OnMoveUpRB;
     public event inputEvents OnMoveDownRB;
+    public event inputEvents OnBlockAdd;
+    public event inputEvents OnBlockChanged;
+    public event inputEvents OnBlockDelete;
     public InputAgregator()
     {
         Debug.Log("InputAgregator loaded");
@@ -33,32 +33,23 @@ public class InputAgregator : MonoBehaviour
     {
         if (GlobalVars.game.InGame)
         {
-            if (Input.GetKeyDown(KeyCode.W)) Move();
-            if (Input.GetKeyDown(KeyCode.A)) RotateToLeft();
-            if (Input.GetKeyDown(KeyCode.S)) RotateToBack();
-            if (Input.GetKeyDown(KeyCode.D)) RotateToRight();
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) Move();
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) RotateToLeft();
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) RotateToBack();
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) RotateToRight();
         }
-
         if (GlobalVars.game.InRedactor)
         {
-            //TODO сделать управление в редакторе
-            
-            //CamPos = CamTransform.position;
-            //CamPos.x += Input.mouseScrollDelta.y * MouseScrollScale;
-            //CamTransform.position = CamPos;
-            
-            if (Input.GetKeyDown(KeyCode.W)) moveForwardRB();
-            if (Input.GetKeyDown(KeyCode.A)) moveLeftRB();
-            if (Input.GetKeyDown(KeyCode.S)) moveBackRB();
-            if (Input.GetKeyDown(KeyCode.D)) moveRightRB();
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) moveForwardRB();
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) moveLeftRB();
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) moveBackRB();
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) moveRightRB();
             if (Input.GetKeyDown(KeyCode.Space)) moveUpRB();
             if (Input.GetKeyDown(KeyCode.LeftControl)) moveDownRB();
-            
-            //hMouse = -1.55f * Input.GetAxis("Mouse X");
-            //vMouse = 1 * Input.GetAxis("Mouse Y");
-            //transform.Rotate(vMouse, hMouse, 0);
+            if (Input.GetKeyDown(KeyCode.E)) blockAdd();
+            if (Input.GetKeyDown(KeyCode.Q)) blockDelete();
+            if (Input.GetKeyDown(KeyCode.R)) blockChanged();
         }
-        
     }
 
     public void Move()
@@ -89,29 +80,67 @@ public class InputAgregator : MonoBehaviour
             OnRotateToBack();
         }
     }
-
     public void moveForwardRB()
     {
-        OnMoveForwardRB();
+        if (OnMoveForwardRB != null)
+        {
+            OnMoveForwardRB();
+        }
     }
     public void moveLeftRB()
     {
-        OnMoveLeftRB();
+        if (OnMoveLeftRB != null)
+        {
+            OnMoveLeftRB();
+        }
     }
     public void moveRightRB()
     {
-        OnMoveRightRB();
+        if (OnMoveRightRB != null)
+        {
+            OnMoveRightRB();
+        }
     }
     public void moveBackRB()
     {
-        OnMoveBackRB();
+        if (OnMoveBackRB != null)
+        {
+            OnMoveBackRB();
+        }
     }
     public void moveUpRB()
     {
-        OnMoveUpRB();
+        if (OnMoveUpRB != null)
+        {
+            OnMoveUpRB();
+        }
     }
     public void moveDownRB()
     {
-        OnMoveDownRB();
+        if (OnMoveDownRB != null)
+        {
+            OnMoveDownRB();
+        }
+    }
+    public void blockAdd()
+    {
+        if (OnBlockAdd != null)
+        {
+            OnBlockAdd();
+        }
+    }
+    public void blockDelete()
+    {
+        if (OnBlockDelete != null)
+        {
+            OnBlockDelete();
+        }
+    }
+    public void blockChanged()
+    {
+        if (OnBlockChanged != null)
+        {
+            OnBlockChanged();
+        }
     }
 }
