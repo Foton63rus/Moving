@@ -13,7 +13,7 @@ public class Game : MonoBehaviour
     private int maxLVL;
     private bool inGame;
     private bool inRedactor;
-    
+    //TODO СДЕЛАТЬ ПЛИТОЧНОЕ МЕНЮ УРОВНЕЙ В МЕНЮ
     void Awake()
     {
         Init();
@@ -119,6 +119,7 @@ public class Game : MonoBehaviour
         _Player.transform.position = new Vector3(X, 1, Y);
         GlobalVars.player = _Player;
         _Player.AddComponent<PlayerManipulator>();
+        //_Player.AddComponent<Animator>();
         return _Player;
     }
     public void Exit()
