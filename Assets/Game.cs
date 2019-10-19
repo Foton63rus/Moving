@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Game : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class Game : MonoBehaviour
         BaseMenuLoad();
         GlobalVars.game = this;
         currentLVL = maxLVL = 1;
+        currentLVL = 1;
     }
 
     public bool InGame
@@ -78,6 +80,10 @@ public class Game : MonoBehaviour
         player = playerAdd(0,0);
         camera = gameObject;
         map = camera.GetComponent<Map>();
+        
+        //GameObject btn = new GameObject("button", typeof(Image), typeof(Button), typeof(RectTransform));
+        //btn.transform.SetParent(canvasInMenu.transform);
+        Debug.Log(Screen.width);
     }
 
     public void BaseMenuLoad()
